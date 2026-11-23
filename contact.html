@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#fff3ed" />
+    <meta name="description" content="Talk to the Furna workshop in Rotterdam: visiting details, an enquiry form and answers to common questions." />
+    <title>Let’s talk — Furna</title>
+    <link rel="preconnect" href="https://framerusercontent.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./site.css" />
+  </head>
+  <body class="page">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="top-bar">
+      <nav class="top-nav" aria-label="Main navigation"><a href="./index.html">Home</a><a href="./work.html">Collection</a><a href="./process.html">Process</a></nav>
+      <a class="top-brand" href="./index.html" aria-label="Furna home"><span class="brand-chair" aria-hidden="true">◡</span>FURNA<sup>®</sup></a>
+      <nav class="top-nav right" aria-label="More navigation"><a href="./studio.html">Studio</a><a href="./blog.html">Blog</a><a href="./contact.html" aria-current="page">Contact</a></nav>
+      <button class="top-toggle" type="button" aria-expanded="false" aria-controls="top-menu" aria-label="Open menu">☰</button>
+    </header>
+    <nav class="top-menu" id="top-menu" aria-label="Mobile navigation"><a href="./index.html">Home</a><a href="./work.html">Collection</a><a href="./process.html">Process</a><a href="./studio.html">Studio</a><a href="./blog.html">Blog</a><a href="./contact.html" aria-current="page">Contact</a></nav>
+
+    <main id="main">
+      <section class="page-hero">
+        <h1>Let’s <em>talk</em></h1>
+        <p>We’re at the back of the yard, past the blue crane. Ring the bell marked FURNA: the machines are loud.</p>
+      </section>
+
+      <section class="page-section" aria-label="Visiting details">
+        <div class="facts">
+          <div><strong>Address</strong><a href="https://maps.google.com/?q=Keilestraat+9,+3029+BP+Rotterdam" target="_blank" rel="noopener">Keilestraat 9, Rotterdam ↗</a></div>
+          <div><strong>Hours</strong><span>Thu – Sat, 10:00 – 18:00</span></div>
+          <div><strong>Getting here</strong><span>Tram 8 to Marconiplein, 6 minutes on foot</span></div>
+          <div><strong>Phone</strong><a href="tel:+12025550147">+1 202 555 0147</a></div>
+          <div><strong>Parking</strong><span>Free, in the yard</span></div>
+          <div><strong>Email</strong><a href="mailto:support@yourbrand.com">support@yourbrand.com</a></div>
+          <div><strong>Access</strong><span>Wheelchair accessible</span></div>
+        </div>
+      </section>
+
+      <section class="page-section">
+        <div class="form-wrap">
+          <div>
+            <span class="eyebrow">( Enquiry form )</span>
+            <h2>Tell us what<br /><em>you’re after.</em></h2>
+            <p class="body-text">Commissions usually start at $1,200 for a small piece and take six to ten weeks from approved drawings.</p>
+            <p class="form-note">Photos and sketches are welcome: send them to the email address above once we’ve replied.</p>
+          </div>
+          <form class="enquiry" id="enquiry" novalidate>
+            <label>Name *<input type="text" name="name" autocomplete="name" required /></label>
+            <label>Email address *<input type="email" name="email" autocomplete="email" required /></label>
+            <label>What are you after?
+              <select name="kind">
+                <option>Table</option><option>Seating</option><option>Storage</option><option>Bed</option><option>Lighting</option><option selected>Not sure yet</option>
+              </select>
+            </label>
+            <label>The brief<textarea name="brief" placeholder="Room, dimensions, materials, timing — whatever you have."></textarea></label>
+            <button type="submit">( Send enquiry )</button>
+            <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+            <p class="form-note">Sending opens your email app with the enquiry filled in, addressed to the studio.</p>
+          </form>
+        </div>
+      </section>
+
+      <section class="page-section faq">
+        <h2>Common <em>questions</em></h2>
+        <details><summary>How long does a full project take?</summary><p>Allow two to three weeks for drawings, then six to ten weeks in the workshop once the drawings are approved. We’ll confirm a date when you commission.</p></details>
+        <details><summary>Can I supply my own timber?</summary><p>Often, yes. We’ll look at the boards first to check species, moisture, dimensions and condition before agreeing that they’re suitable.</p></details>
+        <details><summary>Can I choose the materials and finishes?</summary><p>That’s most of the fun. Timber tone, fabrics, leather and finish are all chosen with you, from samples, before we draw the final piece.</p></details>
+        <details><summary>Do you work with clients outside Rotterdam?</summary><p>Yes. When a studio visit isn’t possible we work by video call and share drawings and samples digitally for approval.</p></details>
+        <details><summary>Do you ship?</summary><p>Within the Benelux we deliver, place and level the piece ourselves. Further afield, pieces are crated, insured and sent by freight.</p></details>
+        <details><summary>How does payment work?</summary><p>A 50% deposit confirms your order and the balance is due before delivery or collection.</p></details>
+      </section>
+    </main>
+
+    <footer id="contact"><div class="footer-top"><span class="eyebrow">Have something in mind?</span><a href="./contact.html" class="footer-title"><span class="footer-lets">LET’S</span><span class="footer-seal"><svg viewBox="0 0 200 200" aria-hidden="true"><defs><path id="footerTextPath" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs><text><textPath href="#footerTextPath" startOffset="50%" text-anchor="middle">YOUR SPACE DESERVES SOMETHING WORTH KEEPING ·</textPath></text><b>↗</b></svg></span><span class="footer-talk">TALK</span></a></div><div class="footer-bottom"><div><strong>EXPLORE</strong><a href="./index.html">Home</a><a href="./work.html">Collection</a><a href="./process.html">Process</a></div><div><strong>PAGES</strong><a href="./studio.html">Studio</a><a href="./blog.html">Blog</a><a href="./contact.html">Contact</a></div><div><strong>CONNECT</strong><a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a><a href="https://www.pinterest.com/" target="_blank" rel="noopener">Pinterest</a><a href="https://www.facebook.com/" target="_blank" rel="noopener">Facebook</a></div><div><strong>VISIT</strong><span>Keilestraat 9, 3029 BP Rotterdam, The Netherlands</span><a href="tel:+12025550147">+1 202 555 0147</a><a href="mailto:support@yourbrand.com">support@yourbrand.com</a></div><div class="copyright"><span>Designed by Webestica, Powered by Framer</span><span>Thu – Sat, 10:00 – 18:00</span></div></div><div class="footer-image"><img src="https://framerusercontent.com/images/OxNCsTc8RmMDYWlXSknclZlmFs.jpg?width=1920&height=420" alt="Hands shaping wood in the Furna workshop" loading="lazy" /></div></footer>
+    <script src="./site.js"></script>
+    <script src="./contact.js"></script>
+  </body>
+</html>

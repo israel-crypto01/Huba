@@ -1,26 +1,52 @@
-const menuToggle = document.querySelector('.menu-toggle');
-const nav = document.querySelector('.main-nav');
-if (menuToggle && nav) {
-menuToggle.addEventListener('click', () => {
-  const isOpen = nav.classList.toggle('open');
-  menuToggle.setAttribute('aria-expanded', String(isOpen));
-  menuToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
-  menuToggle.textContent = isOpen ? '×' : '☰';
-});
-nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => nav.classList.remove('open')));
-}
+// Home page behaviour. (Menu toggle lives in site.js; the old catalogue filter
+// code was removed because neither page has .filter buttons any more.)
 
-document.querySelectorAll('.filter').forEach(button => {
-  button.addEventListener('click', () => {
-    document.querySelector('.filter.active')?.classList.remove('active');
-    button.classList.add('active');
-    const category = button.dataset.filter;
-    document.querySelectorAll('#catalogue-grid .product-card').forEach(card => {
-      card.classList.toggle('hidden', category !== 'All' && card.dataset.category !== category);
-    });
+/* ---------- Hero: scroll-driven chair ---------- */
+(function () {
+  const track = document.querySelector('.hero-object-track');
+  const stage = document.querySelector('.hero-object-stage');
+  if (!track || !stage) return;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let ticking = false;
+
+  function update() {
+    ticking = false;
+    if (reduceMotion.matches) return;
+    const rect = track.getBoundingClientRect();
+    const distance = track.offsetHeight - stage.offsetHeight;
+    const progress = distance > 0 ? Math.min(1, Math.max(0, -rect.top / distance)) : 0;
+    stage.style.setProperty('--chair-y', `${(progress * -6).toFixed(2)}vh`);
+    stage.style.setProperty('--chair-rot', `${(-14 + progress * 28).toFixed(2)}deg`);
+    stage.style.setProperty('--chair-scale', (1 + progress * 0.1).toFixed(3));
+    stage.style.setProperty('--page-depth', `${(progress * -70).toFixed(1)}px`);
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  update();
+})();
+
+/* ---------- Lounge chair showcase carousel ---------- */
+(function () {
+  const track = document.querySelector('#showcase-track');
+  const prev = document.querySelector('#showcase-prev');
+  const next = document.querySelector('#showcase-next');
+  if (!track || !prev || !next) return;
+  const step = () => {
+    const card = track.querySelector('.showcase-card');
+    return card ? card.getBoundingClientRect().width + 20 : track.clientWidth * 0.8;
+  };
+  const behavior = () => (window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth');
+  prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: behavior() }));
+  next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: behavior() }));
+  track.addEventListener('keydown', event => {
+    if (event.key === 'ArrowRight') { event.preventDefault(); next.click(); }
+    if (event.key === 'ArrowLeft') { event.preventDefault(); prev.click(); }
   });
-});
+})();
 
+/* ---------- Testimonials ---------- */
 const testimonials = [
   { quote: 'Three years on, the table is still the first thing every guest asks about. It made the whole apartment make sense.', name: 'Sophie Laurent', role: 'Private residence, Antwerp', image: 'https://framerusercontent.com/images/cqpXv4IVq6rbsUrYtdDpiZWynmA.jpg?width=250&height=250' },
   { quote: 'The dining table completely transformed our space. It feels timeless, solid, and beautifully made. You can tell every detail was considered.', name: 'Daniel Whitmore', role: 'Homeowner, London', image: 'https://framerusercontent.com/images/1NWVrOU9Ff0qLUt2PV6fnjRWqI.jpg?width=150&height=150' },
@@ -40,6 +66,7 @@ function showTestimonial(index) {
 document.querySelector('#testimonial-prev').addEventListener('click', () => showTestimonial(activeTestimonial - 1));
 document.querySelector('#testimonial-next').addEventListener('click', () => showTestimonial(activeTestimonial + 1));
 
+/* ---------- Catalogue: photo follows the scroll ---------- */
 const roomPhotos = [
   { src: './assets/sofas.jpg', alt: 'Soft ivory sofa in a bright living room' },
   { src: './assets/bedroom.jpg', alt: 'Calm bedroom with natural linens and warm wood' },
@@ -53,12 +80,10 @@ const roomImageNext = document.querySelector('#room-image-next');
 const roomCounter = document.querySelector('#room-count');
 let activeRoom = 0;
 let visibleRoomImage = roomImage;
-let roomTransitionTimer;
 function selectRoom(index) {
   if (index < 0 || index >= roomPhotos.length || index === activeRoom) return;
   activeRoom = index;
   roomCopies.forEach((copy, i) => copy.classList.toggle('is-active', i === index));
-  window.clearTimeout(roomTransitionTimer);
   const incomingImage = visibleRoomImage === roomImage ? roomImageNext : roomImage;
   incomingImage.classList.remove('is-visible');
   incomingImage.onload = () => {
@@ -97,5 +122,3 @@ roomCopies.forEach(copy => roomObserver.observe(copy));
 window.addEventListener('load', syncRoomFromScroll, { once: true });
 window.addEventListener('pageshow', syncRoomFromScroll);
 window.addEventListener('resize', syncRoomFromScroll, { passive: true });
-
-
