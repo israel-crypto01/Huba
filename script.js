@@ -27,6 +27,36 @@
   update();
 })();
 
+/* ---------- Studio strip: endless category marquee ---------- */
+(function () {
+  const track = document.querySelector('.cat-track');
+  const group = track && track.querySelector('.cat-group');
+  if (!track || !group) return;
+  const SPEED = 55; // pixels per second
+
+  function build() {
+    // Reset to a single group, then clone until two identical halves each cover the viewport.
+    track.querySelectorAll('.cat-group[data-clone]').forEach(node => node.remove());
+    const width = group.getBoundingClientRect().width;
+    if (!width) return;
+    let copies = 2;
+    while (width * (copies / 2) < window.innerWidth * 1.2) copies += 2;
+    for (let i = 1; i < copies; i += 1) {
+      const clone = group.cloneNode(true);
+      clone.dataset.clone = 'true';
+      clone.setAttribute('aria-hidden', 'true');
+      clone.querySelectorAll('a').forEach(link => link.setAttribute('tabindex', '-1'));
+      track.append(clone);
+    }
+    track.style.setProperty('--cat-duration', `${((width * copies) / 2 / SPEED).toFixed(1)}s`);
+  }
+
+  let resizeTimer;
+  window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(build, 200); });
+  window.addEventListener('load', build, { once: true });
+  build();
+})();
+
 /* ---------- Lounge chair showcase carousel ---------- */
 (function () {
   const track = document.querySelector('#showcase-track');
