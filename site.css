@@ -251,3 +251,11 @@ body { background: var(--peach); }
 
 /* Keep anchor jumps clear of the sticky header */
 html { scroll-padding-top: 64px; }
+
+/* ---------- Category scroll section (list + photo revealed through a circle) ---------- */
+.catalogue.section-wrap { padding-top: 100px; padding-bottom: 110px; }
+.room-visual { top: 84px; height: min(calc(100vh - 108px), 740px); }
+.room-visual .room-image { position: absolute; inset: 0; opacity: 1; transform: none; transition: none; will-change: clip-path; }
+.room-visual > span { z-index: 3; }
+.room-copy { transition: color .45s ease; }
+@media (max-width: 620px) { .catalogue.section-wrap { padding-top: 70px; padding-bottom: 80px; } .room-visual { top: 68px; height: 78vw; } }
