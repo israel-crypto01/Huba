@@ -20,7 +20,7 @@ const POSTS = {
     paragraphs: [
       'Begin with how you will use it. A chair for an hour of reading wants a supportive back and a slightly upright seat. A chair for stretching out wants depth and a lower angle.',
       'Then look at the room. Measure the corner it will sit in and leave space to walk around it. A chair with open arms or a woven frame looks lighter in a small room than a solid, upholstered block.',
-      'Finally, sit in it for longer than a minute. Comfort shows up after ten, and a good maker will happily let you stay.'
+      'Finally, sit in it for longer than a minute. Comfort shows up after ten, and a good seller will happily let you stay.'
     ]
   },
   'choosing-a-dining-table': {
@@ -53,10 +53,10 @@ const slug = new URLSearchParams(window.location.search).get('slug');
 const post = Object.prototype.hasOwnProperty.call(POSTS, slug) ? POSTS[slug] : null;
 
 if (!post) {
-  document.title = 'Post not found — Furna';
+  document.title = 'Post not found — Huba';
   document.querySelector('#post-missing').hidden = false;
 } else {
-  document.title = `${post.title} — Furna`;
+  document.title = `${post.title} — Huba`;
   document.querySelector('meta[name="description"]').setAttribute('content', post.paragraphs[0]);
   document.querySelector('#post-category').textContent = `( ${post.category} )`;
   document.querySelector('#post-title').textContent = post.title;

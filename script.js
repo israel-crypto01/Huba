@@ -76,11 +76,11 @@
   });
 })();
 
-/* ---------- Testimonials ---------- */
+/* ---------- Follow-along slider ---------- */
 const testimonials = [
-  { quote: 'Three years on, the table is still the first thing every guest asks about. It made the whole apartment make sense.', name: 'Sophie Laurent', role: 'Private residence, Antwerp', image: 'https://framerusercontent.com/images/cqpXv4IVq6rbsUrYtdDpiZWynmA.jpg?width=250&height=250' },
-  { quote: 'The dining table completely transformed our space. It feels timeless, solid, and beautifully made. You can tell every detail was considered.', name: 'Daniel Whitmore', role: 'Homeowner, London', image: 'https://framerusercontent.com/images/1NWVrOU9Ff0qLUt2PV6fnjRWqI.jpg?width=150&height=150' },
-  { quote: 'From choosing the right pieces to delivery, everything felt effortless. Our home feels truly ours.', name: 'Amelia Rossi', role: 'Architect, Milan', image: 'https://framerusercontent.com/images/2IOJM5J2nWYHyJOPsNYksikrxbM.jpg?width=150&height=150' }
+  { quote: '1,856 posts of furniture, interior design and decoration. See what we have been up to.', name: '@huba_furniture_decoration', role: 'Instagram · 72.6K followers', image: './assets/logo.png' },
+  { quote: 'Send us a message, a photo or a size, and we will reply with options and prices.', name: 'Order on WhatsApp', role: 'Fast replies, easy ordering', image: './assets/logo.png' },
+  { quote: 'Furniture of all kinds. High quality, affordable prices, and offices in Keko.', name: 'Huba Furniture Decoration', role: 'Keko, Dar es Salaam', image: './assets/logo.png' }
 ];
 let activeTestimonial = 0;
 function showTestimonial(index) {

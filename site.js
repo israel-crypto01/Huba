@@ -16,3 +16,15 @@
   document.addEventListener('keydown', event => { if (event.key === 'Escape') setOpen(false); });
   window.matchMedia('(min-width: 801px)').addEventListener('change', event => { if (event.matches) setOpen(false); });
 })();
+
+// Floating "Order on WhatsApp" button on every page.
+(function () {
+  if (document.querySelector('.wa-float')) return;
+  const link = document.createElement('a');
+  link.className = 'wa-float';
+  link.href = 'https://wa.me/message/7TASPGWT6H77O1';
+  link.target = '_blank';
+  link.rel = 'noopener';
+  link.textContent = 'Order on WhatsApp ↗';
+  document.body.append(link);
+})();
