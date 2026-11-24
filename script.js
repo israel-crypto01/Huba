@@ -66,59 +66,106 @@ function showTestimonial(index) {
 document.querySelector('#testimonial-prev').addEventListener('click', () => showTestimonial(activeTestimonial - 1));
 document.querySelector('#testimonial-next').addEventListener('click', () => showTestimonial(activeTestimonial + 1));
 
-/* ---------- Catalogue: photo follows the scroll ---------- */
-const roomPhotos = [
-  { src: './assets/sofas.jpg', alt: 'Soft ivory sofa in a bright living room' },
-  { src: './assets/bedroom.jpg', alt: 'Calm bedroom with natural linens and warm wood' },
-  { src: './assets/dining.jpg', alt: 'Sculptural dining room with upholstered chairs' },
-  { src: './assets/accent-chair.jpg', alt: 'Sculptural upholstered accent chair' },
-  { src: './assets/lounge.jpg', alt: 'Lounge chair in a softly lit dining room' }
-];
-const roomCopies = [...document.querySelectorAll('.room-copy')];
-const roomImage = document.querySelector('#room-image');
-const roomImageNext = document.querySelector('#room-image-next');
-const roomCounter = document.querySelector('#room-count');
-let activeRoom = 0;
-let visibleRoomImage = roomImage;
-function selectRoom(index) {
-  if (index < 0 || index >= roomPhotos.length || index === activeRoom) return;
-  activeRoom = index;
-  roomCopies.forEach((copy, i) => copy.classList.toggle('is-active', i === index));
-  const incomingImage = visibleRoomImage === roomImage ? roomImageNext : roomImage;
-  incomingImage.classList.remove('is-visible');
-  incomingImage.onload = () => {
-    incomingImage.classList.add('is-visible');
-    visibleRoomImage.classList.remove('is-visible');
-    visibleRoomImage = incomingImage;
-  };
-  incomingImage.onerror = () => incomingImage.classList.add('is-visible');
-  incomingImage.src = roomPhotos[index].src;
-  incomingImage.alt = roomPhotos[index].alt;
-  if (incomingImage.complete && incomingImage.naturalWidth) incomingImage.onload();
-  roomCounter.textContent = `${String(index + 1).padStart(2, '0')} / 05`;
-}
-function syncRoomFromScroll() {
-  const focusLine = window.innerHeight * .45;
-  let nearest = 0;
-  let nearestDistance = Infinity;
-  roomCopies.forEach((copy, index) => {
-    const rect = copy.getBoundingClientRect();
-    const center = rect.top + Math.min(rect.height, window.innerHeight) * .35;
-    const distance = Math.abs(center - focusLine);
-    if (distance < nearestDistance) { nearestDistance = distance; nearest = index; }
-  });
-  selectRoom(nearest);
-}
-const roomObserver = new IntersectionObserver(entries => {
-  const activeEntry = entries
-    .filter(entry => entry.isIntersecting)
-    .sort((a, b) => Math.abs(a.boundingClientRect.top + a.boundingClientRect.height * .35 - innerHeight * .45)
-      - Math.abs(b.boundingClientRect.top + b.boundingClientRect.height * .35 - innerHeight * .45))[0];
-  if (activeEntry) selectRoom(roomCopies.indexOf(activeEntry.target));
-}, { rootMargin: '-35% 0px -35% 0px', threshold: 0 });
-roomCopies.forEach(copy => roomObserver.observe(copy));
-// Cover initial loads and browser-restored scroll positions, where the observer
-// may not report the currently visible section immediately.
-window.addEventListener('load', syncRoomFromScroll, { once: true });
-window.addEventListener('pageshow', syncRoomFromScroll);
-window.addEventListener('resize', syncRoomFromScroll, { passive: true });
+/* ---------- Category scroll: the next photo is revealed through a growing circle ---------- */
+(function () {
+  const copies = [...document.querySelectorAll('.room-copy')];
+  const layers = [document.querySelector('#room-image'), document.querySelector('#room-image-next')];
+  const counter = document.querySelector('#room-count');
+  if (!copies.length || !layers[0] || !layers[1] || !counter) return;
+
+  const photos = [
+    { src: './assets/sofas.jpg', alt: 'Sofa laini ya rangi ya pembe katika sebule angavu' },
+    { src: './assets/bedroom.jpg', alt: 'Chumba cha kulala tulivu chenye mashuka ya asili na mbao za joto' },
+    { src: './assets/dining.jpg', alt: 'Chumba cha chakula chenye viti vilivyofunikwa kwa kitambaa' },
+    { src: './assets/accent-chair.jpg', alt: 'Kiti cha mapambo chenye umbo la kisanii' },
+    { src: './assets/lounge.jpg', alt: 'Kiti cha mapumziko katika chumba cha chakula chenye mwanga hafifu' }
+  ];
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const DURATION = 650;          // ms, the circle grows from the centre of the photo
+  const EASING = 'cubic-bezier(.22, .8, .24, 1)';
+  const FULL_RADIUS = 75;        // % of the box diagonal: enough to cover the corners
+
+  let active = 0;                // item the text list currently highlights
+  let shown = layers[0];         // layer that is fully visible
+  let pending = null;            // reveal in progress: { animation, layer, previous }
+  let token = 0;                 // ignores late image loads after a newer selection
+
+  layers[0].style.zIndex = '1';
+  layers[1].style.zIndex = '0';
+  layers[1].style.visibility = 'hidden';
+
+  function settle() {
+    if (!pending) return;
+    const { animation, layer, previous } = pending;
+    pending = null;
+    animation.cancel();
+    previous.style.zIndex = '0';
+    previous.style.visibility = 'hidden';
+    layer.style.zIndex = '1';
+    shown = layer;
+  }
+
+  function reveal(index) {
+    settle();                    // finish any reveal still running, instantly
+    const photo = photos[index];
+    const incoming = shown === layers[0] ? layers[1] : layers[0];
+    const myToken = ++token;
+    incoming.src = photo.src;
+    incoming.alt = photo.alt;
+    const ready = incoming.decode ? incoming.decode().catch(() => {}) : Promise.resolve();
+    ready.then(() => {
+      if (myToken !== token) return;
+      incoming.style.visibility = 'visible';
+      if (reduceMotion.matches || !incoming.animate) {
+        shown.style.zIndex = '0';
+        shown.style.visibility = 'hidden';
+        incoming.style.zIndex = '1';
+        shown = incoming;
+        return;
+      }
+      incoming.style.zIndex = '2';
+      shown.style.zIndex = '1';
+      const animation = incoming.animate(
+        [{ clipPath: 'circle(0% at 50% 50%)' }, { clipPath: `circle(${FULL_RADIUS}% at 50% 50%)` }],
+        { duration: DURATION, easing: EASING }
+      );
+      pending = { animation, layer: incoming, previous: shown };
+      animation.onfinish = () => { if (pending && pending.animation === animation) settle(); };
+    });
+  }
+
+  function select(index) {
+    if (index < 0 || index >= photos.length || index === active) return;
+    active = index;
+    copies.forEach((copy, i) => copy.classList.toggle('is-active', i === index));
+    counter.textContent = `${String(index + 1).padStart(2, '0')} / ${String(photos.length).padStart(2, '0')}`;
+    reveal(index);
+  }
+
+  function syncFromScroll() {
+    const focusLine = window.innerHeight * .45;
+    let nearest = 0;
+    let nearestDistance = Infinity;
+    copies.forEach((copy, index) => {
+      const rect = copy.getBoundingClientRect();
+      const center = rect.top + Math.min(rect.height, window.innerHeight) * .35;
+      const distance = Math.abs(center - focusLine);
+      if (distance < nearestDistance) { nearestDistance = distance; nearest = index; }
+    });
+    select(nearest);
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    const hit = entries
+      .filter(entry => entry.isIntersecting)
+      .sort((a, b) => Math.abs(a.boundingClientRect.top + a.boundingClientRect.height * .35 - innerHeight * .45)
+        - Math.abs(b.boundingClientRect.top + b.boundingClientRect.height * .35 - innerHeight * .45))[0];
+    if (hit) select(copies.indexOf(hit.target));
+  }, { rootMargin: '-35% 0px -35% 0px', threshold: 0 });
+  copies.forEach(copy => observer.observe(copy));
+
+  // Cover initial loads and browser-restored scroll positions.
+  window.addEventListener('load', syncFromScroll, { once: true });
+  window.addEventListener('pageshow', syncFromScroll);
+  window.addEventListener('resize', syncFromScroll, { passive: true });
+})();
