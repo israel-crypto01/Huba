@@ -17,11 +17,11 @@ const slug = new URLSearchParams(window.location.search).get('item');
 const product = Object.prototype.hasOwnProperty.call(PRODUCTS, slug) ? PRODUCTS[slug] : null;
 
 if (!product) {
-  document.title = 'Piece not found — Furna';
+  document.title = 'Piece not found — HUBA FURNITURE DECORATION';
   document.querySelector('#product-missing').hidden = false;
 } else {
   const fullName = `“${product.name}” ${product.type}`;
-  document.title = `${fullName} — Furna`;
+  document.title = `${fullName} — HUBA FURNITURE DECORATION`;
   document.querySelector('meta[name="description"]').setAttribute('content', `${fullName}: ${product.desc}`);
   const img = document.querySelector('#product-img');
   img.src = IMG(product.img);

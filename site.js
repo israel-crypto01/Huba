@@ -1,4 +1,4 @@
-// Shared across every page: mobile menu toggle.
+﻿// Shared across every page: mobile menu toggle.
 (function () {
   const toggle = document.querySelector('.top-toggle');
   const menu = document.querySelector('#top-menu');
@@ -7,7 +7,7 @@
   function setOpen(open) {
     menu.classList.toggle('open', open);
     toggle.setAttribute('aria-expanded', String(open));
-    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    toggle.setAttribute('aria-label', open ? 'Funga menyu' : 'Fungua menyu');
     toggle.textContent = open ? '×' : '☰';
   }
 

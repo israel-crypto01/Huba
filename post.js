@@ -53,10 +53,10 @@ const slug = new URLSearchParams(window.location.search).get('slug');
 const post = Object.prototype.hasOwnProperty.call(POSTS, slug) ? POSTS[slug] : null;
 
 if (!post) {
-  document.title = 'Post not found — Furna';
+  document.title = 'Post not found — HUBA FURNITURE DECORATION';
   document.querySelector('#post-missing').hidden = false;
 } else {
-  document.title = `${post.title} — Furna`;
+  document.title = `${post.title} — HUBA FURNITURE DECORATION`;
   document.querySelector('meta[name="description"]').setAttribute('content', post.paragraphs[0]);
   document.querySelector('#post-category').textContent = `( ${post.category} )`;
   document.querySelector('#post-title').textContent = post.title;

@@ -1,4 +1,4 @@
-// Home page behaviour. (Menu toggle lives in site.js; the old catalogue filter
+﻿// Home page behaviour. (Menu toggle lives in site.js; the old catalogue filter
 // code was removed because neither page has .filter buttons any more.)
 
 /* ---------- Hero: scroll-driven chair ---------- */
@@ -48,9 +48,9 @@
 
 /* ---------- Testimonials ---------- */
 const testimonials = [
-  { quote: 'Three years on, the table is still the first thing every guest asks about. It made the whole apartment make sense.', name: 'Sophie Laurent', role: 'Private residence, Antwerp', image: 'https://framerusercontent.com/images/cqpXv4IVq6rbsUrYtdDpiZWynmA.jpg?width=250&height=250' },
-  { quote: 'The dining table completely transformed our space. It feels timeless, solid, and beautifully made. You can tell every detail was considered.', name: 'Daniel Whitmore', role: 'Homeowner, London', image: 'https://framerusercontent.com/images/1NWVrOU9Ff0qLUt2PV6fnjRWqI.jpg?width=150&height=150' },
-  { quote: 'From choosing the right pieces to delivery, everything felt effortless. Our home feels truly ours.', name: 'Amelia Rossi', role: 'Architect, Milan', image: 'https://framerusercontent.com/images/2IOJM5J2nWYHyJOPsNYksikrxbM.jpg?width=150&height=150' }
+  { quote: 'Miaka mitatu sasa, meza hii bado ni kitu cha kwanza kila mgeni anachoulizia. Ilifanya sebule yote ya nyumba kueleweka na kupendeza.', name: 'Sophie Laurent', role: 'Makazi binafsi, Antwerp', image: 'https://framerusercontent.com/images/cqpXv4IVq6rbsUrYtdDpiZWynmA.jpg?width=250&height=250' },
+  { quote: 'Meza ya chakula ilibadilisha kabisa muonekano wa nafasi yetu. Inavutia daima, ni imara, na imetengenezwa kwa umakini mkubwa. Kila undani uliguswa kwa ustadi.', name: 'Daniel Whitmore', role: 'Mwenye nyumba, London', image: 'https://framerusercontent.com/images/1NWVrOU9Ff0qLUt2PV6fnjRWqI.jpg?width=150&height=150' },
+  { quote: 'Kuanzia kuchagua vifaa vinavyofaa hadi uwasilishaji, kila kitu kilienda kwa urahisi sana. Nyumba yetu sasa inahisiwa kuwa yetu haswa.', name: 'Amelia Rossi', role: 'Mbunifu majengo, Milan', image: 'https://framerusercontent.com/images/2IOJM5J2nWYHyJOPsNYksikrxbM.jpg?width=150&height=150' }
 ];
 let activeTestimonial = 0;
 function showTestimonial(index) {
