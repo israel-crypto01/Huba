@@ -1,7 +1,173 @@
-.work-brand{width:54px;height:54px;justify-content:center;gap:0;font-size:0}
-.work-brand .site-logo{display:block;width:100%;height:100%;object-fit:cover;border-radius:50%}
-.work-brand sup{display:none}
-@media(max-width:900px){.work-nav{gap:17px}.work-nav a{font-size:13px}.work-brand{font-size:25px}.work-title{font-size:12vw;margin:90px auto 90px;gap:26px}.works-grid{width:92%;gap:27px 16px}.work-meta h2,.work-meta span{font-size:15px}}
-@media(max-width:620px){.work-header{height:auto;min-height:72px;padding:10px 5vw;grid-template-columns:1fr auto}.work-nav-left{gap:15px}.work-nav-left a{font-size:10px}.work-nav-left a:last-child,.work-nav-right{display:none}.work-brand{grid-column:2;width:48px;height:48px}.brand-chair{width:25px;height:25px;font-size:19px}.work-title{font-size:15vw;gap:12px;margin:90px auto 65px}.works-grid{width:90%;grid-template-columns:repeat(2,minmax(0,1fr));gap:25px 12px}.work-photo{border-radius:8px}.work-meta{display:block;margin-top:9px}.work-meta h2,.work-meta span{font-size:12px}.work-meta span{display:block;margin-top:5px}.load-more-wrap{height:230px;padding-top:60px}.load-more{font-size:13px;padding:12px 25px}}
-.catalogue-video-wrap{width:100%;overflow:hidden;border-radius:12px;background:#fff}.catalogue-video{display:block;width:100%;height:auto;aspect-ratio:1812/862;object-fit:contain;background:#fff}
-@media(max-width:620px){.catalogue-video-wrap{border-radius:8px}.catalogue-video{aspect-ratio:16/10}}
+/* ==========================================================
+   work.css — Catalogue / Kazi Zetu page
+   ========================================================== */
+
+/* ---- Page hero ---- */
+.catalogue-hero {
+  background: var(--peach);
+  text-align: center;
+  padding: 80px 4vw 60px;
+  color: var(--rust);
+  font-family: var(--switzer);
+}
+.catalogue-hero .eyebrow {
+  font-size: 13px;
+  letter-spacing: .15em;
+  color: var(--rust);
+  margin-bottom: 20px;
+}
+.catalogue-hero h1 {
+  font-size: clamp(72px, 11vw, 172px);
+  font-weight: 700;
+  letter-spacing: -.07em;
+  line-height: .88;
+  color: var(--rust);
+  margin: 0 0 24px;
+  font-family: var(--switzer);
+}
+.catalogue-hero h1 em {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -.045em;
+}
+.catalogue-hero p {
+  margin: 0 auto;
+  max-width: 480px;
+  font-size: clamp(15px, 1.4vw, 20px);
+  line-height: 1.4;
+  color: var(--rust);
+  opacity: .75;
+}
+
+/* ---- Filter bar ---- */
+.filter-bar {
+  background: var(--peach);
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  padding: 0 4vw 48px;
+  font-family: var(--switzer);
+  margin: 0;
+}
+
+/* ---- Catalogue grid ---- */
+.catalogue-grid {
+  background: var(--peach);
+  padding: 0 4vw 100px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 36px 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* ---- Each product card ---- */
+.cat-card {
+  display: flex;
+  flex-direction: column;
+}
+.cat-card.is-filtered-out { display: none; }
+
+/* Photo */
+.cat-photo {
+  display: block;
+  position: relative;
+  aspect-ratio: .88;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #ece5db;
+  flex-shrink: 0;
+}
+.cat-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .7s cubic-bezier(.2, .7, .2, 1);
+}
+.cat-photo:hover img { transform: scale(1.045); }
+
+/* Number badge */
+.cat-num {
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  font-family: var(--switzer);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  color: white;
+  text-shadow: 0 1px 6px rgba(0,0,0,.35);
+}
+
+/* Info below photo */
+.cat-info {
+  padding: 16px 4px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cat-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+}
+.cat-name {
+  margin: 0;
+  font-family: var(--switzer);
+  font-size: clamp(15px, 1.2vw, 20px);
+  font-weight: 500;
+  letter-spacing: -.03em;
+  color: var(--ink);
+}
+.cat-price {
+  font-family: var(--switzer);
+  font-size: clamp(14px, 1.1vw, 18px);
+  font-weight: 700;
+  color: var(--rust);
+  white-space: nowrap;
+}
+.cat-desc {
+  margin: 0;
+  font-size: clamp(11px, .85vw, 14px);
+  color: #8a877d;
+  line-height: 1.5;
+}
+.cat-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--switzer);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--rust);
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+  width: max-content;
+  margin-top: 4px;
+  transition: opacity .2s;
+}
+.cat-link:hover { opacity: .7; }
+
+/* ---- Responsive ---- */
+@media (max-width: 900px) {
+  .catalogue-hero { padding: 60px 5vw 44px; }
+  .catalogue-grid { padding: 0 5vw 80px; gap: 28px 16px; }
+}
+@media (max-width: 700px) {
+  .catalogue-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .catalogue-hero h1 { font-size: 14vw; }
+}
+@media (max-width: 480px) {
+  .catalogue-hero { padding: 50px 5vw 36px; }
+  .catalogue-hero h1 { font-size: 17vw; }
+  .catalogue-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 10px; padding: 0 5vw 70px; }
+  .cat-link { font-size: 12px; }
+  .filter-bar { padding-bottom: 32px; }
+}
